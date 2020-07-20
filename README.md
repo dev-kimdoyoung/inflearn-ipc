@@ -1,1 +1,29 @@
-readme
+# Linux IPC Programming
+## Data Transfer
+### 사전 지식
+#### Byte Stream
+- 정의 : 입력과 출력 사이에서 이동하는 byte의 흐름
+- 종류 : 읽기 (read) 스트림, 쓰기 (write) 스트림
+
+#### API
+1. pid_t fork()
+ - 프로세스 생성 함수
+   * pid_t : 프로세스의 ID
+ - fork 함수를 호출하는 프로세스 : 부모 프로세스
+ - fork 함수에 의해 생성된 프로세스 : 자식 프로세스
+   * 자식 프로세스는 부모 프로세스의 메모리를 duplicate
+   
+### Pipe
+#### Pipe
+- int pipe(pipe_fd[2])
+  * pipe[0] : write 스트림
+  * pipe[1] : read 스트림
+- 단방향 Byte Stream
+- Name 또는 ID가 없음 : related process 간에 사용 가능
+- 각 프로세스는 **read 또는 write 중 하나의 스트림 만을 가져가는 것**이 좋음
+  * parent 프로세스에서 child 프로세스로 데이터를 안전하게 전송하기 위함
+  * 각 프로세스가 read/write 스트림 둘 다 open한 상태일 경우  
+    parent에서 child로 데이터 전송 시 child가 아닌 parent가 데이터를 read할 경우가 존재
+- write size가 PIPE_BUF 크기를 넘어서지 않도록 하자
+  * **interleaved**될 위험성이 있으니 유념
+ 
