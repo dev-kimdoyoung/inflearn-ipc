@@ -8,6 +8,13 @@
 
 #define IPC_KEY_FILENAME 	"/proc"
 #define IPC_KEY_PROJ_ID		'a'
+/*
+ *  [개요]
+ *  SysV에서 제공하는 API를 통해 메세지 큐를 생성하여 다른 프로세스 간
+ *  데이터 통신이 이루어지는지 확인
+ */
+
+
 
 /*  메세지 큐에서 사용할 메시지 정의  */
 struct msgbuf {
