@@ -13,7 +13,7 @@ Linux에서 동작하는 IPC(Inter-Process Communication, 프로세스 간 통�
 ## 목차
 ### 1. Data Transfer
 #### 1. Pipe/Named Pipe(FIFO) : [PIPE Source Code Link](https://github.com/dev-kimdoyoung/inflearn-ipc/tree/data-transfer/byte-stream "Pipe branch로 이동")
-#### 2. Message (POSIX, SysV) : 
+#### 2. Message (POSIX, SysV) : [Message Source Code Link](https://github.com/dev-kimdoyoung/inflearn-ipc/tree/data-transfer/message "Message Branch로 이동")
 #### 3. Socket (Stream / Datagram) : 
 ---
 ### 2. Shared Memory
