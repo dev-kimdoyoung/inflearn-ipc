@@ -1,16 +1,5 @@
 # Linux IPC Programming
 ## Data Transfer
-### 사전 지식
-#### Byte Stream
-- 정의 : 입력과 출력 사이에서 이동하는 byte의 흐름
-- 종류 : 읽기 (read) 스트림, 쓰기 (write) 스트림
-
-#### File Descriptor (FD, 파일 기술자)
-- 정의 : 프로세스에서 특정 파일에 접근할 때 사용하는 추상적인 값
-- fd는 0을 포함한 양의 정수 값을 가짐
-- Unix System에서 정규파일, 디렉토리, 소켓, 파이프 등 모든 객체들은 파일로써 관리되는데  
-  해당 **System 내 프로세스가 위 파일들을 접근할 때** fd라는 개념을 이용
-   
 ### Pipe
 #### Pipe
 - int pipe(pipe_fd[2])
