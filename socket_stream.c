@@ -21,6 +21,51 @@ static void print_usage(const char *progname) {
 	printf("%s (server | client)\n)", progname);
 }
 
+/* 
+ *  partial write에 대한 예외 처리
+ *  실제 데이터 영역을 제외한 나머지의 buf 영역을 
+ *  리턴하도록 예외 처리
+ *  *buf : 읽은 데이터를 저장하기 위한 버퍼 
+ *  buflen : 소켓 버퍼로부터 읽어올 크기
+ *
+ */
+int stream_send(int sock, void *buf, size_t buflen, int flag) {
+        int written = 0;
+        int ret;
+        while(written < buflen) {
+                ret = send(sock, (char *)buf + written,
+                                buflen - written, flag);
+                /*  send() API call 실패 시 -1 리턴  */
+                if(ret == -1) {
+                        return ret;
+                }
+                /*  서버에 보낸 데이터 크기를 더하기  */
+                written += ret;
+        }
+        return 0;
+}
+
+/*
+ *  partial read에 대한 예외 처리
+ *  ※ stream_send()와 동일한 구조
+ *
+ */
+int stream_recv(int sock, void *buf, size_t buflen, int flag) {
+        int written = 0;
+        int ret;
+        while(written < buflen) {
+                ret = recv(sock, (char *)buf + written,
+                                buflen - written, flag);
+                /*  send() API call 실패 시 -1 리턴  */
+                if(ret == -1) {
+                        return ret;
+                }
+                /*  서버에 보낸 데이터 크기를 더하기  */
+                written += ret;
+        }
+        return 0;
+}
+
 static int do_server(void) {
 	int sock;
 	int isBindSuccess;
@@ -73,7 +118,7 @@ static int do_server(void) {
 	memset(buf, 0, sizeof(buf));
 
 	/*  데이터 수신 및 출력  */
-	ret = recv(peer, buf, sizeof(buf), 0);
+	ret = stream_recv(peer, buf, sizeof(buf), 0);
 	
 	if(ret == -1) {
 	
@@ -126,7 +171,7 @@ static int do_client(void) {
 	snprintf(buf, sizeof(buf), "this is msg from sock_stream");
 
 	/*  서버로 데이터 전송  */
-	ret = send(sock, buf, sizeof(buf), 0);
+	ret = stream_send(sock, buf, sizeof(buf), 0);
 
 	if(ret < 0) {
 
