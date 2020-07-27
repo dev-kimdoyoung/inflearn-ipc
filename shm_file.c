@@ -9,6 +9,12 @@
 
 #define SHARED_FILENAME "shared"
 
+/**
+ *      [개요]
+ *      특정 파일의 데이터를 공유 메모리에 할당 후
+ *      다수의 프로세스가 해당 메모리에 할당된 데이터를 성공적으로 공유하는지 확인
+ */
+
 struct login_info {
 	int pid;	// 프로세스 아이디
 	int counter;	// 로그인 횟수
