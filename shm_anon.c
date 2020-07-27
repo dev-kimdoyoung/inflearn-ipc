@@ -18,9 +18,11 @@ struct login_info {
 	int counter;
 };
 
+/*  부모 프로세스에서 공유 메모리 데이터 변경 여부를 지속적으로 확인  
+    만약 데이터 변경 횟수가 5번인 경우 메모리 할당 해제 후 리턴  */
 static int do_monitoring(struct login_info *info) {
 	int n;
-	struct login_info local;
+	struct login_info local;	// 자식 프로세스의 흔적을 남기기 위한 데이터
 	
 	memset(&local, 0, sizeof(local));
 	n = 0;
@@ -34,7 +36,8 @@ static int do_monitoring(struct login_info *info) {
 			/*  공유 메모리 데이터 출력  */
 			printf("pid = %d, counter = %d\n", 
 					info->pid, info->counter);
-			/*  local 구조체에 공유 메모리 데이터 복사  */
+
+			/*  local 구조체에 공유 메모리 상의 데이터 복사  */
 			memcpy(&local, info, sizeof(struct login_info));
 			n++;
 			if(n == 5) 
@@ -44,7 +47,7 @@ static int do_monitoring(struct login_info *info) {
 		usleep(100000);		// 0.1초 sleep
 	}
 
-	/*  공유 메모리 할당 해제  */
+	/*  부모 프로세스의 공유 메모리 할당 해제  */
 	munmap(info, sizeof(struct login_info));
 	
 	return 0;
@@ -105,7 +108,7 @@ int main(int argc, char** argv) {
 			/*  공유 메모리 데이터 변경  */
 			do_login(iterator, info);
 
-			/*  공유 메모리 할당 해제  */
+			/*  자식 프로세스의 공유 메모리 할당 해제  */
 			munmap(info, sizeof(struct login_info));
 
 			return 0;
@@ -117,6 +120,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
+	/*  부모 프로세스는 공유 메모리 모니터링  */
 	do_monitoring(info);
 	
 	for(iterator = 0; iterator < NUM_FORK; iterator++) {
