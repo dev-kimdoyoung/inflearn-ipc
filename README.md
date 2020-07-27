@@ -8,6 +8,11 @@ Linux에서 동작하는 IPC(Inter-Process Communication, 프로세스 간 통�
 ### 3. 소프트웨어 요구사항에 맞는 IPC 도구를 선택해 설계/구현할 수 있는 능력을 배양한다.
 
 ## 사전 지식
+### Process
+- 정의 : 컴퓨터에서 연속적으로 사용되고 있는 프로그램
+  - 종종 스케줄링 대상이 되는 작업(task)라는 의미로도 사용
+  - 프로그램이 **메모리 상에서 실행**되는 작업 단위
+  
 ### Byte Stream
 - 정의 : 입력과 출력 사이에서 이동하는 byte의 흐름
 - 종류 : 읽기 (read) 스트림, 쓰기 (write) 스트림
@@ -28,6 +33,7 @@ Linux에서 동작하는 IPC(Inter-Process Communication, 프로세스 간 통�
 #### 3. Socket (Stream / Datagram) : [Socket Source Code Link](https://github.com/dev-kimdoyoung/inflearn-ipc/tree/data-transfer/socket "Socket Branch로 이동")
 ---
 ### 2. Shared Memory
+#### 1. File-Memory Mapping : [file-memory mapping Source Code Link](https://github.com/dev-kimdoyoung/inflearn-ipc/tree/shared-memory/file-memery-mapping "file-momory-mapping Branch로 이동")
 
 ---
 ### 3. Synchronization
