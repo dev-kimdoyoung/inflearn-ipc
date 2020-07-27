@@ -8,6 +8,11 @@
 #include <sys/mman.h>
 #include <sys/wait.h>
 
+/**
+ *	[개요]
+ *	부모 프로세스에서 익명 파일의 데이터를 공유 메모리에 할당 후
+ *	다수의 자식 프로세스가 해당 메모리에 할당된 데이터를 성공적으로 공유하는지 확인
+ */
 struct login_info {
 	int pid;
 	int counter;
